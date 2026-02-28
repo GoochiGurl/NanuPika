@@ -577,25 +577,135 @@ section{position:relative;z-index:1}
   transition:transform .22s,background .22s;
 }
 .map-pin:hover .pin-head{background:var(--terracotta);transform:rotate(-45deg) scale(1.4)}
+.map-pin.fav .pin-head{background:var(--terracotta)}
+.map-pin.fav:hover .pin-head{background:var(--peri-deep)}
+
+/* fav star badge on pin */
+.pin-fav-star{
+  position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+  font-size:.85rem;line-height:1;pointer-events:none;
+  filter:drop-shadow(0 1px 3px rgba(44,36,24,.3));
+  animation:starPulse 2.2s ease-in-out infinite;
+}
+@keyframes starPulse{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.25)}}
 
 .pin-popup{
-  position:absolute;bottom:calc(100% + 10px);left:50%;
-  transform:translateX(-50%) translateY(8px);
-  width:230px;
-  background:var(--ivory);border:1px solid rgba(184,196,168,.5);
-  box-shadow:0 10px 32px rgba(44,36,24,.13);
+  position:absolute;bottom:calc(100% + 12px);left:50%;
+  transform:translateX(-50%) translateY(10px);
+  width:280px;
+  background:var(--ivory);
+  border:1px solid rgba(184,196,168,.5);
+  box-shadow:0 14px 42px rgba(44,36,24,.16),0 2px 8px rgba(44,36,24,.08);
   opacity:0;pointer-events:none;
-  transition:opacity .3s,transform .3s;
+  transition:opacity .32s,transform .32s cubic-bezier(.16,1,.3,1);
+  overflow:hidden;
 }
 .map-pin:hover .pin-popup{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:all}
-.ppu-img{
-  height:95px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;
-  background:linear-gradient(135deg,rgba(204,204,255,.5),rgba(184,196,168,.3));
+
+/* favourite banner strip */
+.ppu-fav-banner{
+  background:linear-gradient(90deg,var(--terracotta),var(--blush-deep));
+  padding:.28rem .85rem;
+  font-family:var(--ff-body);font-style:italic;font-size:.65rem;
+  letter-spacing:.12em;color:#fff;
+  display:flex;align-items:center;gap:.4rem;
 }
-.ppu-body{padding:.85rem}
-.ppu-name{font-family:var(--ff-serif);font-size:.92rem;font-weight:700;color:var(--ink);margin-bottom:.12rem}
-.ppu-type{font-family:var(--ff-body);font-style:italic;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--peri-mid);margin-bottom:.4rem}
-.ppu-desc{font-family:var(--ff-body);font-size:.78rem;line-height:1.55;color:var(--ink-light)}
+
+.ppu-img{
+  height:105px;display:flex;align-items:center;justify-content:center;font-size:3.2rem;
+  position:relative;overflow:hidden;
+}
+.ppu-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(44,36,24,.18) 100%);
+}
+
+.ppu-body{padding:1rem 1rem .85rem}
+.ppu-name{
+  font-family:var(--ff-serif);font-size:1rem;font-weight:700;
+  color:var(--ink);margin-bottom:.18rem;line-height:1.25;
+}
+.ppu-type{
+  font-family:var(--ff-body);font-style:italic;font-size:.62rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--peri-mid);margin-bottom:.6rem;
+}
+.ppu-desc{
+  font-family:var(--ff-body);font-size:.8rem;line-height:1.62;
+  color:var(--ink-med);margin-bottom:.75rem;
+  border-left:2px solid rgba(204,204,255,.6);
+  padding-left:.65rem;
+}
+
+/* detail rows */
+.ppu-details{
+  display:flex;flex-direction:column;gap:.3rem;
+  padding-top:.65rem;
+  border-top:1px solid rgba(184,196,168,.3);
+}
+.ppu-detail-row{
+  display:flex;gap:.5rem;align-items:flex-start;
+  font-family:var(--ff-body);font-size:.73rem;color:var(--ink-light);
+  line-height:1.4;
+}
+.ppu-detail-icon{
+  font-size:.8rem;flex-shrink:0;margin-top:.05rem;
+}
+.ppu-detail-label{
+  font-weight:700;color:var(--ink-med);margin-right:.25rem;
+}
+
+/* must-try chip */
+.ppu-chips{
+  display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.55rem;
+}
+.ppu-chip{
+  font-family:var(--ff-body);font-size:.62rem;letter-spacing:.06em;
+  color:var(--peri-deep);
+  border:1px solid rgba(153,153,204,.35);
+  padding:.18rem .55rem;border-radius:100px;
+  background:rgba(204,204,255,.12);
+}
+.ppu-chip.hot{
+  color:var(--terracotta);
+  border-color:rgba(200,120,90,.35);
+  background:rgba(200,120,90,.08);
+}
+
+/* link */
+.ppu-link{
+  display:block;
+  margin:.8rem -.0rem -.85rem;
+  padding:.6rem 1rem;
+  background:rgba(204,204,255,.15);
+  border-top:1px solid rgba(184,196,168,.25);
+  font-family:var(--ff-body);font-style:italic;font-size:.72rem;
+  color:var(--peri-deep);text-decoration:none;
+  letter-spacing:.05em;
+  transition:background .2s,color .2s;
+  text-align:center;
+}
+.ppu-link:hover{background:var(--periwinkle);color:var(--ink)}
+
+/* map section favorites sidebar legend */
+.map-legend{
+  display:flex;align-items:center;gap:1.5rem;
+  padding:.8rem 1.8rem;
+  background:rgba(250,246,238,.7);
+  border-top:1px solid rgba(184,196,168,.25);
+  backdrop-filter:blur(4px);
+}
+.legend-item{
+  display:flex;align-items:center;gap:.45rem;
+  font-family:var(--ff-body);font-style:italic;font-size:.72rem;
+  color:var(--ink-light);
+}
+.legend-dot{
+  width:10px;height:10px;border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);flex-shrink:0;
+}
+.legend-dot-fav{background:var(--terracotta)}
+.legend-dot-reg{background:var(--peri-deep)}
 
 /* ============================================================
    FAM + MINI-GAME
@@ -704,6 +814,228 @@ section{position:relative;z-index:1}
 }
 
 /* ============================================================
+   KAWAII CAT GARDEN GAME
+   ============================================================ */
+.kawaii-garden {
+  width:100%;max-width:900px;margin:0 auto;
+  background: linear-gradient(180deg, #D4EACC 0%, #C8E0C0 35%, #E8D4C8 35%, #F2E4D8 100%);
+  border:2px solid rgba(184,196,168,.5);
+  border-radius:4px;
+  position:relative;
+  overflow:hidden;
+  height:480px;
+  box-shadow:0 12px 40px rgba(44,36,24,.1);
+  font-family:'Segoe UI Emoji','Apple Color Emoji',sans-serif;
+}
+
+/* sky */
+.kg-sky {
+  position:absolute;top:0;left:0;right:0;height:35%;
+  background:linear-gradient(180deg,#C8DCF0 0%,#D4EACC 100%);
+}
+/* ground */
+.kg-ground {
+  position:absolute;bottom:0;left:0;right:0;height:65%;
+  background:linear-gradient(180deg,#E8D8CC 0%,#F0E4D8 100%);
+}
+/* grass strip */
+.kg-grass {
+  position:absolute;top:35%;left:0;right:0;height:28px;
+  overflow:hidden;
+}
+.kg-grass::before {
+  content:'🌿🍃🌿🌾🍃🌿🍃🌾🌿🍃🌿🌾🍃🌿🍃🌾🌿🍃🌿🌾🍃🌿🍃🌾🌿🍃';
+  font-size:1.1rem;display:block;line-height:1;
+  white-space:nowrap;letter-spacing:.05rem;
+}
+
+/* floating clouds */
+.kg-cloud {
+  position:absolute;font-size:2.2rem;opacity:.7;
+  animation:cloudDrift linear infinite;
+  top:4%;pointer-events:none;
+}
+@keyframes cloudDrift{from{transform:translateX(-80px)}to{transform:translateX(calc(100vw + 80px))}}
+
+/* flowers scattered in garden */
+.kg-flower {
+  position:absolute;font-size:1.4rem;
+  pointer-events:none;animation:flowerSway 3s ease-in-out infinite;
+}
+@keyframes flowerSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+
+/* cat platform / cushion */
+.kg-cushion {
+  position:absolute;bottom:28%;
+  width:110px;height:54px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;
+  transition:transform .2s;
+}
+.kg-cushion-inner {
+  width:100%;height:100%;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.kg-cushion-nanu { background:radial-gradient(circle,#DDDDF5 40%,#CCCCFF 100%); border:2px solid rgba(153,153,204,.4); }
+.kg-cushion-pika  { background:radial-gradient(circle,#FFE4CC 40%,#F0C8A0 100%); border:2px solid rgba(200,168,106,.4); }
+
+/* the cat SVG canvas */
+.kg-cat-canvas {
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  pointer-events:none;
+}
+
+/* name tag */
+.kg-cat-name {
+  position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+  font-family:var(--ff-body);font-style:italic;font-size:.7rem;
+  color:var(--ink-med);background:rgba(255,255,255,.7);
+  padding:.1rem .5rem;border-radius:100px;white-space:nowrap;
+  border:1px solid rgba(184,196,168,.4);
+}
+
+/* heart bar */
+.kg-hearts {
+  position:absolute;top:-46px;left:50%;transform:translateX(-50%);
+  display:flex;gap:2px;
+  font-size:1rem;
+  white-space:nowrap;
+}
+.kg-heart { opacity:.2; transition:opacity .3s,transform .3s; }
+.kg-heart.filled { opacity:1; animation:heartPop .35s cubic-bezier(.36,0,.66,-.56) forwards; }
+@keyframes heartPop{0%{transform:scale(1)}40%{transform:scale(1.6)}100%{transform:scale(1)}}
+
+/* treat tray */
+.kg-treat-tray {
+  position:absolute;bottom:6%;left:50%;transform:translateX(-50%);
+  display:flex;gap:1rem;align-items:center;
+}
+.kg-treat-btn {
+  font-size:2rem;cursor:none;
+  background:rgba(255,255,255,.6);
+  border:1.5px solid rgba(184,196,168,.5);
+  border-radius:50%;
+  width:56px;height:56px;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .15s,background .15s,box-shadow .15s;
+  position:relative;
+  user-select:none;
+}
+.kg-treat-btn:hover {
+  transform:scale(1.15);
+  background:rgba(255,255,255,.9);
+  box-shadow:0 4px 16px rgba(44,36,24,.12);
+}
+.kg-treat-btn:active { transform:scale(.9); }
+.kg-treat-btn .treat-label {
+  position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);
+  font-family:var(--ff-body);font-size:.6rem;color:var(--ink-light);
+  white-space:nowrap;
+}
+
+/* treat-for indicator */
+.kg-treat-target {
+  position:absolute;bottom:calc(6% + 70px);left:50%;transform:translateX(-50%);
+  font-family:var(--ff-body);font-style:italic;font-size:.78rem;
+  color:var(--terracotta);background:rgba(255,255,255,.7);
+  padding:.2rem .8rem;border-radius:100px;
+  border:1px solid rgba(200,120,90,.3);
+  pointer-events:none;
+  transition:opacity .3s;
+}
+
+/* flying treat animation */
+.kg-flying-treat {
+  position:absolute;pointer-events:none;font-size:1.6rem;
+  animation:treatFly .55s cubic-bezier(.25,.46,.45,.94) forwards;
+  z-index:20;
+}
+@keyframes treatFly {
+  0%   { transform:translate(0,0) scale(1); opacity:1; }
+  70%  { opacity:1; }
+  100% { transform:translate(var(--tx),var(--ty)) scale(.3); opacity:0; }
+}
+
+/* petting zone — shown when unlocked */
+.kg-pet-zone {
+  position:absolute;inset:0;
+  background:rgba(220,200,240,.0);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:background .6s;
+  pointer-events:none;
+  z-index:15;
+}
+.kg-pet-zone.active { background:rgba(220,200,240,.25); pointer-events:all; }
+
+.kg-pet-bubble {
+  background:rgba(255,255,255,.88);
+  border:1.5px solid rgba(153,153,204,.5);
+  border-radius:4px;
+  padding:1.2rem 2rem;
+  text-align:center;
+  opacity:0;transform:translateY(12px) scale(.95);
+  transition:all .45s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 8px 30px rgba(44,36,24,.12);
+  max-width:320px;
+}
+.kg-pet-zone.active .kg-pet-bubble { opacity:1; transform:translateY(0) scale(1); }
+
+.kg-pet-title {
+  font-family:var(--ff-display);font-style:italic;font-size:1.6rem;
+  color:var(--ink);margin-bottom:.4rem;
+}
+.kg-pet-sub {
+  font-family:var(--ff-body);font-style:italic;font-size:.85rem;
+  color:var(--ink-light);margin-bottom:1rem;line-height:1.6;
+}
+.kg-pet-cat-emoji {
+  font-size:4rem;
+  display:block;margin:.5rem auto;
+  cursor:none;
+  transition:transform .15s;
+  animation:petCatBounce 1.8s ease-in-out infinite;
+}
+@keyframes petCatBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.kg-pet-cat-emoji:hover { transform:scale(1.2) rotate(5deg) !important; }
+.kg-pet-cat-emoji:active { transform:scale(.9) !important; }
+
+.kg-pet-purr {
+  font-family:var(--ff-body);font-style:italic;font-size:.8rem;
+  color:var(--peri-deep);margin-top:.4rem;min-height:1.2rem;
+}
+
+/* purr float up */
+.kg-purr-float {
+  position:absolute;pointer-events:none;
+  font-family:var(--ff-body);font-style:italic;font-size:.9rem;
+  color:var(--peri-deep);
+  animation:purrUp .9s ease forwards;
+  z-index:30;
+}
+@keyframes purrUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-50px)}}
+
+/* status banner */
+.kg-status {
+  position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  font-family:var(--ff-body);font-style:italic;font-size:.78rem;
+  color:var(--ink-med);background:rgba(255,255,255,.72);
+  padding:.25rem 1rem;border-radius:100px;
+  pointer-events:none;z-index:10;
+  border:1px solid rgba(184,196,168,.4);
+  transition:opacity .4s;
+}
+
+/* cat drawn via CSS — simple kawaii */
+.kg-cat-wrap {
+  position:absolute;bottom:54%;
+  display:flex;flex-direction:column;align-items:center;
+  cursor:none;
+  transition:left .6s cubic-bezier(.16,1,.3,1), bottom .3s ease;
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 footer{
@@ -760,7 +1092,7 @@ footer::before{
     <li><a href="#musings">Musings</a></li>
     <li><a href="#art">Art</a></li>
     <li><a href="#travel">Travel</a></li>
-    <li><a href="#fam">Fam</a></li>
+    <li><a href="#fam">Games</a></li>
   </ul>
 </nav>
 
@@ -809,9 +1141,9 @@ footer::before{
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.76 1.22-5.14 1.22-5.14s-.31-.62-.31-1.55c0-1.45.84-2.54 1.89-2.54.89 0 1.32.67 1.32 1.47 0 .9-.57 2.24-.87 3.48-.25 1.04.52 1.88 1.54 1.88 1.85 0 3.1-2.37 3.1-5.17 0-2.14-1.44-3.64-3.49-3.64-2.38 0-3.78 1.78-3.78 3.63 0 .72.28 1.49.62 1.91.07.08.08.15.06.23l-.23.95c-.04.15-.12.18-.28.11C7.35 13.5 6.5 11.58 6.5 10c0-2.93 2.13-5.62 6.14-5.62 3.22 0 5.72 2.3 5.72 5.37 0 3.2-2.02 5.78-4.82 5.78-.94 0-1.83-.49-2.13-1.07l-.58 2.17c-.21.8-.77 1.8-1.15 2.41.87.27 1.79.42 2.74.42 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
       Pinterest
     </a>
-    <a href="mailto:courtney@example.com" class="soc-pill">
+    <a href="/cdn-cgi/l/email-protection#4a29253f383e242f330a2f322b273a262f64292527" class="soc-pill">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="m2 8 10 7 10-7"/></svg>
-      courtney@example.com
+      <span class="__cf_email__" data-cfemail="c9aaa6bcbbbda7acb089acb1a8a4b9a5ace7aaa6a4">[email&#160;protected]</span>
     </a>
   </div>
 
@@ -841,7 +1173,7 @@ footer::before{
         <p class="about-bio sr">
           I'm a creative director turned artist and <em>Chief of Staff at Sunrun</em> — the nation's leading residential solar and clean energy company. By day I help power a cleaner future; by weekend I'm throwing clay, layering watercolors, and writing about leadership that actually feels human.
           <br><br>
-          I believe in slow mornings, long coastal walks, and things made imperfectly by hand. You'll find me at farmers markets or wandering tide pools with <em>Nalu, Nanu, and Pika</em>.
+          I believe in slow mornings, long coastal walks, and things made imperfectly by hand. You'll find me at farmers markets or wandering tide pools with my cats <em>Nanu and Pika</em>.
         </p>
 
         <div class="ilinks sr">
@@ -870,7 +1202,7 @@ footer::before{
               <div class="res-name">Courtney Gooch</div>
               <div class="res-title">Chief of Staff · Artist · Creative Leader</div>
               <div class="res-contact">
-                <a href="mailto:courtney@example.com">courtney@example.com</a>
+                <a href="/cdn-cgi/l/email-protection#32515d4740465c574b72574a535f425e571c515d5f"><span class="__cf_email__" data-cfemail="e4878b9196908a819da4819c8589948881ca878b89">[email&#160;protected]</span></a>
                 <span>Orange County, CA</span>
                 <a href="#">linkedin.com/in/courtneygooch</a>
               </div>
@@ -1161,36 +1493,268 @@ footer::before{
           <text x="62" y="490" font-family="DM Serif Display,serif" font-style="italic" font-size="13" fill="rgba(70,100,140,.5)">Pacific Ocean</text>
         </svg>
 
-        <!-- Pins -->
-        <div class="map-pin" style="left:58%;top:61%">
+        <!-- ★ FAVORITE: Dana Point Bluffs -->
+        <div class="map-pin fav" style="left:73%;top:79%">
+          <div class="pin-fav-star">★</div>
           <div class="pin-head"></div>
-          <div class="pin-popup"><div class="ppu-img">🏖️</div><div class="ppu-body"><div class="ppu-name">Crystal Cove State Park</div><div class="ppu-type">Beach · Nature</div><div class="ppu-desc">The most magical stretch of California coastline — tide pools, trails, and a historic beachfront colony frozen in time.</div></div></div>
-        </div>
-        <div class="map-pin" style="left:67%;top:67%">
-          <div class="pin-head"></div>
-          <div class="pin-popup"><div class="ppu-img">🎨</div><div class="ppu-body"><div class="ppu-name">Laguna Beach</div><div class="ppu-type">Art · Coast</div><div class="ppu-desc">Southern California's art colony — endless galleries, dramatic coves, and golden light that makes you want to paint everything.</div></div></div>
-        </div>
-        <div class="map-pin" style="left:75%;top:76%">
-          <div class="pin-head"></div>
-          <div class="pin-popup"><div class="ppu-img">⛵</div><div class="ppu-body"><div class="ppu-name">Dana Point Harbor</div><div class="ppu-type">Harbor · Food</div><div class="ppu-desc">Whale watching, harbor walks, and the best fish tacos you'll ever eat — worth every minute of the drive.</div></div></div>
-        </div>
-        <div class="map-pin" style="left:55%;top:54%">
-          <div class="pin-head"></div>
-          <div class="pin-popup"><div class="ppu-img">🧺</div><div class="ppu-body"><div class="ppu-name">Newport Farmers Market</div><div class="ppu-type">Market · Food</div><div class="ppu-desc">Sunday mornings here are a ritual — stone fruits, ranunculus bundles, and fresh tamales that taste like love.</div></div></div>
-        </div>
-        <div class="map-pin" style="left:44%;top:50%">
-          <div class="pin-head"></div>
-          <div class="pin-popup"><div class="ppu-img">🛍️</div><div class="ppu-body"><div class="ppu-name">South Coast Plaza</div><div class="ppu-type">Shopping · Culture</div><div class="ppu-desc">Not just a mall — museum-quality design browsing, Patina Ceramics, and the best people-watching in OC.</div></div></div>
-        </div>
-        <div class="map-pin" style="left:72%;top:83%">
-          <div class="pin-head"></div>
-          <div class="pin-popup"><div class="ppu-img">🌱</div><div class="ppu-body"><div class="ppu-name">The Ecology Center</div><div class="ppu-type">Farm · Community</div><div class="ppu-desc">A regenerative farm in San Juan Capistrano that restores my faith in how people can choose to live on this planet.</div></div></div>
-        </div>
-        <div class="map-pin" style="left:52%;top:57%">
-          <div class="pin-head"></div>
-          <div class="pin-popup"><div class="ppu-img">🍦</div><div class="ppu-body"><div class="ppu-name">Balboa Island</div><div class="ppu-type">Island · Charming</div><div class="ppu-desc">A frozen banana is mandatory, the ferry ride delightful, and the tiny cottages make you want to simplify your whole life.</div></div></div>
+          <div class="pin-popup">
+            <div class="ppu-fav-banner">★ Courtney's Favorite</div>
+            <div class="ppu-img" style="background:linear-gradient(135deg,#A8C4D8 0%,#C8D8CC 50%,#D4C8B8 100%)">
+              🌊
+              <div class="ppu-img-overlay"></div>
+            </div>
+            <div class="ppu-body">
+              <div class="ppu-name">Dana Point Bluffs Trail</div>
+              <div class="ppu-type">Coastal Trail · Views · Sunset</div>
+              <div class="ppu-desc">"The most quietly stunning walk in all of OC. At golden hour the light hits the water and you forget what year it is. I've painted this view more times than I can count."</div>
+              <div class="ppu-details">
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">📍</span><span><span class="ppu-detail-label">Where:</span>Street of the Green Lantern, Dana Point, CA 92629</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🕐</span><span><span class="ppu-detail-label">Best time:</span>Sunrise or 1 hr before sunset</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🅿️</span><span><span class="ppu-detail-label">Parking:</span>Free street parking on Green Lantern</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🥾</span><span><span class="ppu-detail-label">Trail:</span>~2.5 mi blufftop loop, easy, paved sections</span></div>
+              </div>
+              <div class="ppu-chips">
+                <span class="ppu-chip hot">★ Must Visit</span>
+                <span class="ppu-chip">Whale watching Nov–Apr</span>
+                <span class="ppu-chip">Dog friendly</span>
+                <span class="ppu-chip">Free</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=Dana+Point+Bluffs+Trail" target="_blank" class="ppu-link">Open in Google Maps →</a>
+          </div>
         </div>
 
+        <!-- ★ FAVORITE: Trevor's at the Tracks -->
+        <div class="map-pin fav" style="left:76%;top:86%">
+          <div class="pin-fav-star">★</div>
+          <div class="pin-head"></div>
+          <div class="pin-popup">
+            <div class="ppu-fav-banner">★ Courtney's Favorite</div>
+            <div class="ppu-img" style="background:linear-gradient(135deg,#D4C4A8 0%,#E8D4B8 50%,#C8C0A8 100%)">
+              🍽️
+              <div class="ppu-img-overlay"></div>
+            </div>
+            <div class="ppu-body">
+              <div class="ppu-name">Trevor's at the Tracks</div>
+              <div class="ppu-type">Restaurant · Bar · Date Night</div>
+              <div class="ppu-desc">"A tiny gem tucked next to the train tracks in San Juan Capistrano. The patio fairy lights, the wine list, the roasted chicken — it's the kind of place that makes you want to linger for hours."</div>
+              <div class="ppu-details">
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">📍</span><span><span class="ppu-detail-label">Where:</span>26701 Verdugo St, San Juan Capistrano, CA 92675</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🕐</span><span><span class="ppu-detail-label">Hours:</span>Tue–Sun 5pm–10pm · Brunch Sat–Sun 10am–3pm</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">💰</span><span><span class="ppu-detail-label">Vibe:</span>Upscale casual · great date night · patio seating</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">📞</span><span><span class="ppu-detail-label">Res:</span>Reservations recommended (OpenTable)</span></div>
+              </div>
+              <div class="ppu-chips">
+                <span class="ppu-chip hot">★ Must Eat</span>
+                <span class="ppu-chip">Roasted chicken</span>
+                <span class="ppu-chip">Natural wine list</span>
+                <span class="ppu-chip">Patio fairy lights</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=Trevor%27s+at+the+Tracks+San+Juan+Capistrano" target="_blank" class="ppu-link">Open in Google Maps →</a>
+          </div>
+        </div>
+
+        <!-- ★ FAVORITE: The Ecology Center -->
+        <div class="map-pin fav" style="left:70%;top:83%">
+          <div class="pin-fav-star">★</div>
+          <div class="pin-head"></div>
+          <div class="pin-popup">
+            <div class="ppu-fav-banner">★ Courtney's Favorite</div>
+            <div class="ppu-img" style="background:linear-gradient(135deg,#B8CCB0 0%,#C8D4C0 50%,#D4CCAC 100%)">
+              🌱
+              <div class="ppu-img-overlay"></div>
+            </div>
+            <div class="ppu-body">
+              <div class="ppu-name">The Ecology Center</div>
+              <div class="ppu-type">Regenerative Farm · Market · Events</div>
+              <div class="ppu-desc">"A regenerative farm and gathering space that restores my faith in how people can choose to live on this planet. The Thursday market, the flower CSA, the farm dinners — all of it is magic."</div>
+              <div class="ppu-details">
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">📍</span><span><span class="ppu-detail-label">Where:</span>32701 Alipaz St, San Juan Capistrano, CA 92675</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🕐</span><span><span class="ppu-detail-label">Market:</span>Thursdays 3–7pm · Farm store open daily</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🌾</span><span><span class="ppu-detail-label">CSA:</span>Weekly farm boxes, flower bouquets, honey</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🎪</span><span><span class="ppu-detail-label">Events:</span>Farm dinners, workshops, kids programs</span></div>
+              </div>
+              <div class="ppu-chips">
+                <span class="ppu-chip hot">★ Soul-restoring</span>
+                <span class="ppu-chip">Flower CSA</span>
+                <span class="ppu-chip">Farm dinners</span>
+                <span class="ppu-chip">Kids welcome</span>
+              </div>
+            </div>
+            <a href="https://theecologycenter.org" target="_blank" class="ppu-link">Visit theecologycenter.org →</a>
+          </div>
+        </div>
+
+        <!-- Crystal Cove -->
+        <div class="map-pin" style="left:58%;top:61%">
+          <div class="pin-head"></div>
+          <div class="pin-popup">
+            <div class="ppu-img" style="background:linear-gradient(135deg,#A8C4D0 0%,#C8D8C0 60%,#D4CCBC 100%)">
+              🏖️<div class="ppu-img-overlay"></div>
+            </div>
+            <div class="ppu-body">
+              <div class="ppu-name">Crystal Cove State Park</div>
+              <div class="ppu-type">Beach · Tide Pools · Hiking</div>
+              <div class="ppu-desc">The most magical stretch of California coastline — 3.5 miles of undeveloped beach, rugged tide pools, and a historic beachfront colony that feels frozen in the 1930s.</div>
+              <div class="ppu-details">
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">📍</span><span><span class="ppu-detail-label">Where:</span>8471 N Coast Hwy, Laguna Beach, CA 92651</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">💰</span><span><span class="ppu-detail-label">Fee:</span>$15 day-use parking · free walk-in</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🍽️</span><span><span class="ppu-detail-label">Eat:</span>The Beachcomber Café — brunch on the sand</span></div>
+              </div>
+              <div class="ppu-chips">
+                <span class="ppu-chip">Tide pools</span>
+                <span class="ppu-chip">Historic cottages</span>
+                <span class="ppu-chip">Snorkeling</span>
+                <span class="ppu-chip">12mi of trails</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=Crystal+Cove+State+Park" target="_blank" class="ppu-link">Open in Google Maps →</a>
+          </div>
+        </div>
+
+        <!-- Laguna Beach -->
+        <div class="map-pin" style="left:67%;top:67%">
+          <div class="pin-head"></div>
+          <div class="pin-popup">
+            <div class="ppu-img" style="background:linear-gradient(135deg,#C8B8D0 0%,#D0C8B0 60%,#CCC0C8 100%)">
+              🎨<div class="ppu-img-overlay"></div>
+            </div>
+            <div class="ppu-body">
+              <div class="ppu-name">Laguna Beach</div>
+              <div class="ppu-type">Art Colony · Galleries · Coast</div>
+              <div class="ppu-desc">Southern California's original art colony — dramatic coves, 100+ galleries, and golden afternoon light that makes you want to paint everything you see.</div>
+              <div class="ppu-details">
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🎨</span><span><span class="ppu-detail-label">Don't miss:</span>Pageant of the Masters (Jul–Aug), Festival of Arts</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🍽️</span><span><span class="ppu-detail-label">Eat:</span>Nick's Laguna Beach, The Cliff, 230 Forest Ave</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🏖️</span><span><span class="ppu-detail-label">Beaches:</span>Victoria, Thousand Steps, Crescent Bay</span></div>
+              </div>
+              <div class="ppu-chips">
+                <span class="ppu-chip">100+ galleries</span>
+                <span class="ppu-chip">Art walks</span>
+                <span class="ppu-chip">Hidden coves</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=Laguna+Beach+CA" target="_blank" class="ppu-link">Open in Google Maps →</a>
+          </div>
+        </div>
+
+        <!-- Dana Point Harbor -->
+        <div class="map-pin" style="left:75%;top:76%">
+          <div class="pin-head"></div>
+          <div class="pin-popup">
+            <div class="ppu-img" style="background:linear-gradient(135deg,#B8C8D8 0%,#C8D8C8 60%,#D8C8C0 100%)">
+              ⛵<div class="ppu-img-overlay"></div>
+            </div>
+            <div class="ppu-body">
+              <div class="ppu-name">Dana Point Harbor</div>
+              <div class="ppu-type">Harbor · Whale Watching · Seafood</div>
+              <div class="ppu-desc">A charming harbor town with some of the best whale watching in California, lovely sunset walks along the docks, and seafood worth the drive from anywhere in OC.</div>
+              <div class="ppu-details">
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🐋</span><span><span class="ppu-detail-label">Whales:</span>Blue & gray whales Jan–Mar, humpbacks summer</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🍽️</span><span><span class="ppu-detail-label">Eat:</span>Turk's Chop House, Wind & Sea, Jon's Fish Market</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">⛵</span><span><span class="ppu-detail-label">Tours:</span>Ocean Institute, Dana Wharf whale watching</span></div>
+              </div>
+              <div class="ppu-chips">
+                <span class="ppu-chip">Whale watching</span>
+                <span class="ppu-chip">Sunset harbor walk</span>
+                <span class="ppu-chip">Fish market</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=Dana+Point+Harbor" target="_blank" class="ppu-link">Open in Google Maps →</a>
+          </div>
+        </div>
+
+        <!-- Newport Farmers Market -->
+        <div class="map-pin" style="left:55%;top:54%">
+          <div class="pin-head"></div>
+          <div class="pin-popup">
+            <div class="ppu-img" style="background:linear-gradient(135deg,#D8C8B0 0%,#C8D0A8 60%,#D8C8A8 100%)">
+              🧺<div class="ppu-img-overlay"></div>
+            </div>
+            <div class="ppu-body">
+              <div class="ppu-name">Newport Beach Farmers Market</div>
+              <div class="ppu-type">Farmers Market · Sunday Ritual</div>
+              <div class="ppu-desc">Sunday mornings here are a full ritual — stone fruits, ranunculus bundles in every color, fresh tamales, and the best honey I've ever tasted.</div>
+              <div class="ppu-details">
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">📍</span><span><span class="ppu-detail-label">Where:</span>Newport Beach Civic Center, San Miguel Dr</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🕐</span><span><span class="ppu-detail-label">Hours:</span>Sundays 9am–1pm, year-round</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🌸</span><span><span class="ppu-detail-label">Get:</span>Ranunculus, local honey, stone fruit, tamales</span></div>
+              </div>
+              <div class="ppu-chips">
+                <span class="ppu-chip">Sunday only</span>
+                <span class="ppu-chip">Cut flowers</span>
+                <span class="ppu-chip">Local vendors</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=Newport+Beach+Farmers+Market" target="_blank" class="ppu-link">Open in Google Maps →</a>
+          </div>
+        </div>
+
+        <!-- Balboa Island -->
+        <div class="map-pin" style="left:52%;top:57%">
+          <div class="pin-head"></div>
+          <div class="pin-popup">
+            <div class="ppu-img" style="background:linear-gradient(135deg,#C8D4E0 0%,#E0D4C8 60%,#D0C8D4 100%)">
+              🍦<div class="ppu-img-overlay"></div>
+            </div>
+            <div class="ppu-body">
+              <div class="ppu-name">Balboa Island</div>
+              <div class="ppu-type">Island Village · Ferry · Charming</div>
+              <div class="ppu-desc">A tiny island of beach cottages, boutique shops, and pure California nostalgia. The ferry is 5 minutes. The frozen banana is mandatory.</div>
+              <div class="ppu-details">
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">⛴️</span><span><span class="ppu-detail-label">Ferry:</span>Balboa Ferry runs daily, $1 walk-on fare</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🍌</span><span><span class="ppu-detail-label">Must eat:</span>Frozen banana at Dad's Donut & Bakery Shop</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🚶</span><span><span class="ppu-detail-label">Loop:</span>~2 mi walk around the island perimeter</span></div>
+              </div>
+              <div class="ppu-chips">
+                <span class="ppu-chip">Frozen bananas</span>
+                <span class="ppu-chip">Ferry ride</span>
+                <span class="ppu-chip">Beach cottages</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=Balboa+Island+Newport+Beach" target="_blank" class="ppu-link">Open in Google Maps →</a>
+          </div>
+        </div>
+
+        <!-- South Coast Plaza -->
+        <div class="map-pin" style="left:44%;top:50%">
+          <div class="pin-head"></div>
+          <div class="pin-popup">
+            <div class="ppu-img" style="background:linear-gradient(135deg,#D0C8E4 0%,#E4D8C0 60%,#D4CCC8 100%)">
+              🛍️<div class="ppu-img-overlay"></div>
+            </div>
+            <div class="ppu-body">
+              <div class="ppu-name">South Coast Plaza</div>
+              <div class="ppu-type">Shopping · Design · Culture</div>
+              <div class="ppu-desc">Not just a mall — it's where I go for museum-quality design browsing, Patina Ceramics, and the best people-watching in OC.</div>
+              <div class="ppu-details">
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🏺</span><span><span class="ppu-detail-label">Go for:</span>Patina Ceramics, Tom Dixon, design objects</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🍽️</span><span><span class="ppu-detail-label">Eat:</span>Marché Moderne — exceptional French bistro</span></div>
+                <div class="ppu-detail-row"><span class="ppu-detail-icon">🕐</span><span><span class="ppu-detail-label">Hours:</span>Mon–Sat 10am–9pm, Sun 11am–7pm</span></div>
+              </div>
+              <div class="ppu-chips">
+                <span class="ppu-chip">Patina Ceramics</span>
+                <span class="ppu-chip">Marché Moderne</span>
+                <span class="ppu-chip">Free parking</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=South+Coast+Plaza+Costa+Mesa" target="_blank" class="ppu-link">Open in Google Maps →</a>
+          </div>
+        </div>
+
+      </div><!-- /map-canvas-wrap -->
+
+      <!-- legend bar -->
+      <div class="map-legend">
+        <div class="legend-item">
+          <div class="legend-dot legend-dot-fav"></div>
+          <span>★ Courtney's Favorites — Dana Point Bluffs · Trevor's at the Tracks · The Ecology Center</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot legend-dot-reg"></div>
+          <span>Other favorite spots</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1199,17 +1763,11 @@ footer::before{
 <!-- ══════════════════════════════ FAM ══ -->
 <section id="fam">
   <div class="wrap">
-    <span class="sec-kicker sr" style="text-align:center;display:block">The real bosses</span>
-    <h2 class="sec-title sr" style="text-align:center">Meet the Fam</h2>
-    <p class="fam-lead sr">They didn't come with instructions, but they came with so much love — my three reasons for never leaving home on time.</p>
+    <span class="sec-kicker sr" style="text-align:center;display:block">Meet the fam &amp; play</span>
+    <h2 class="sec-title sr" style="text-align:center">Nanu &amp; Pika 🐾</h2>
+    <p class="fam-lead sr">Two cats who run the house — and two games that let you spend time with them.</p>
 
     <div class="fam-cards">
-      <div class="fam-card sr">
-        <div class="fam-blob fb-dog">🐕<span class="fam-note">Add Nalu's photo</span></div>
-        <div class="fam-name">Nalu</div>
-        <div class="fam-species">Golden Retriever · 4 years</div>
-        <p class="fam-desc">Named for the Hawaiian word for wave. Carries his own leash to the door each morning. Professional treat negotiator and best hiking companion.</p>
-      </div>
       <div class="fam-card sr">
         <div class="fam-blob fb-cat1">🐱<span class="fam-note">Add Nanu's photo</span></div>
         <div class="fam-name">Nanu</div>
@@ -1224,10 +1782,10 @@ footer::before{
       </div>
     </div>
 
-    <!-- MINI-GAME -->
+    <!-- GAME 1: Critter Chase -->
     <div class="sr" style="text-align:center;margin-bottom:1.5rem">
-      <span class="sec-kicker" style="display:inline-block;margin-bottom:.3rem">Interactive</span>
-      <h3 style="font-family:var(--ff-display);font-style:italic;font-size:2rem;color:var(--ink);margin-bottom:.5rem">Play with them!</h3>
+      <span class="sec-kicker" style="display:inline-block;margin-bottom:.3rem">Game 1</span>
+      <h3 style="font-family:var(--ff-display);font-style:italic;font-size:2rem;color:var(--ink);margin-bottom:.5rem">Chase &amp; Catch</h3>
       <p style="font-family:var(--ff-body);font-style:italic;font-size:.9rem;color:var(--ink-light)">The critters <em>gently flee</em> your mouse — click to burst them into sparkles ✨</p>
     </div>
 
@@ -1239,6 +1797,14 @@ footer::before{
       <div class="game-score" id="gameScore" style="display:none">💫 <span id="scoreNum">0</span></div>
       <div class="game-hint" id="gameHint" style="display:none">Click the critters before they escape! ✨</div>
     </div>
+
+    <!-- GAME 2: Kawaii Cat Garden -->
+    <div class="sr" style="text-align:center;margin:5rem 0 1.5rem">
+      <span class="sec-kicker" style="display:inline-block;margin-bottom:.3rem">Game 2</span>
+      <h3 style="font-family:var(--ff-display);font-style:italic;font-size:2rem;color:var(--ink);margin-bottom:.5rem">Kitty Garden 🌸</h3>
+      <p style="font-family:var(--ff-body);font-style:italic;font-size:.9rem;color:var(--ink-light)">Click treats to feed Nanu &amp; Pika — earn <strong style="color:var(--terracotta)">5 hearts</strong> per cat to unlock petting time 🐾</p>
+    </div>
+    <div class="kawaii-garden sr" id="kawaiiGarden"><!-- rendered by JS --></div>
 
   </div>
 </section>
@@ -1252,7 +1818,7 @@ footer::before{
     <li><a href="#art">Art</a></li>
     <li><a href="#travel">Travel</a></li>
     <li><a href="https://instagram.com/yourhandle" target="_blank">Instagram</a></li>
-    <li><a href="mailto:courtney@example.com">Email</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#ee8d819b9c9a808b97ae8b968f839e828bc08d8183">Email</a></li>
   </ul>
   <p class="foot-copy">Made with clay, coastal light &amp; wabi-sabi &ensp;·&ensp; © 2025 Courtney Gooch</p>
 </footer>
@@ -1260,7 +1826,7 @@ footer::before{
 <!-- ============================================================
    JAVASCRIPT
    ============================================================ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── Cursor ─────────────────────────────────── */
 const cDot=document.getElementById('cDot'),cRing=document.getElementById('cRing');
 let mx=0,my=0,rx=0,ry=0;
@@ -1536,19 +2102,359 @@ document.querySelectorAll('.map-pin').forEach(pin=>{
   });
 });
 
-/* ── Floating botanicals (subtle) ───────────── */
-const botanicals=['🌿','🌸','🌾','🍃','✿','🌺'];
-function spawnBotanical(){
-  const b=document.createElement('div');
-  b.style.cssText=`position:fixed;font-size:${.8+Math.random()*.7}rem;left:${Math.random()*100}vw;top:110vh;pointer-events:none;z-index:2;opacity:0;animation:botanFloat ${16+Math.random()*10}s linear forwards`;
-  b.textContent=botanicals[Math.floor(Math.random()*botanicals.length)];
-  document.body.appendChild(b);
-  setTimeout(()=>b.remove(),28000);
-}
-const bStyle=document.createElement('style');
-bStyle.textContent=`@keyframes botanFloat{0%{transform:translateY(0) rotate(0deg);opacity:0}5%{opacity:.4}90%{opacity:.2}100%{transform:translateY(-115vh) rotate(180deg);opacity:0}}`;
-document.head.appendChild(bStyle);
-setInterval(spawnBotanical,4500);
+/* ── Floating botanicals removed per request ── */
+
+/* ═══════════════════════════════════════════════
+   KAWAII CAT GARDEN GAME
+   ═══════════════════════════════════════════════ */
+(function initKawaiiGarden(){
+  const garden = document.getElementById('kawaiiGarden');
+  if(!garden) return;
+
+  /* ─── Build the garden HTML ─────────────────── */
+  garden.innerHTML = `
+    <div class="kg-sky"></div>
+    <div class="kg-ground"></div>
+    <div class="kg-grass"></div>
+
+    <!-- clouds -->
+    <div class="kg-cloud" style="animation-duration:22s;animation-delay:0s;top:5%">☁️</div>
+    <div class="kg-cloud" style="animation-duration:30s;animation-delay:-12s;top:12%">☁️</div>
+    <div class="kg-cloud" style="animation-duration:18s;animation-delay:-7s;top:8%;font-size:1.5rem">☁️</div>
+
+    <!-- flowers -->
+    <div class="kg-flower" style="left:5%;bottom:38%;animation-delay:0s">🌸</div>
+    <div class="kg-flower" style="left:12%;bottom:36%;animation-delay:.4s">🌼</div>
+    <div class="kg-flower" style="left:80%;bottom:38%;animation-delay:.7s">🌸</div>
+    <div class="kg-flower" style="left:88%;bottom:36%;animation-delay:.2s">🌺</div>
+    <div class="kg-flower" style="left:50%;bottom:37%;animation-delay:.9s;font-size:1rem">🌸</div>
+    <div class="kg-flower" style="left:70%;bottom:37%;animation-delay:.5s;font-size:.9rem">🌼</div>
+    <div class="kg-flower" style="left:25%;bottom:36%;animation-delay:.3s;font-size:.9rem">🌷</div>
+
+    <!-- status -->
+    <div class="kg-status" id="kgStatus">🌸 Click a treat, then click a cat to feed them!</div>
+
+    <!-- NANU cushion + hearts -->
+    <div class="kg-cushion" id="cushionNanu" style="left:18%">
+      <div class="kg-cushion-inner kg-cushion-nanu">
+        <div class="kg-hearts" id="heartsNanu">
+          <span class="kg-heart" id="hN0">🩷</span>
+          <span class="kg-heart" id="hN1">🩷</span>
+          <span class="kg-heart" id="hN2">🩷</span>
+          <span class="kg-heart" id="hN3">🩷</span>
+          <span class="kg-heart" id="hN4">🩷</span>
+        </div>
+        <div class="kg-cat-name">Nanu</div>
+        <canvas class="kg-cat-canvas" id="nanuCanvas" width="80" height="88"></canvas>
+      </div>
+    </div>
+
+    <!-- PIKA cushion + hearts -->
+    <div class="kg-cushion" id="cushionPika" style="right:18%">
+      <div class="kg-cushion-inner kg-cushion-pika">
+        <div class="kg-hearts" id="heartsPika">
+          <span class="kg-heart" id="hP0">🩷</span>
+          <span class="kg-heart" id="hP1">🩷</span>
+          <span class="kg-heart" id="hP2">🩷</span>
+          <span class="kg-heart" id="hP3">🩷</span>
+          <span class="kg-heart" id="hP4">🩷</span>
+        </div>
+        <div class="kg-cat-name">Pika</div>
+        <canvas class="kg-cat-canvas" id="pikaCanvas" width="80" height="88"></canvas>
+      </div>
+    </div>
+
+    <!-- treat tray -->
+    <div class="kg-treat-tray" id="kgTreatTray">
+      <div class="kg-treat-btn" id="treatFish" data-treat="🐟">
+        🐟<span class="treat-label">Fish</span>
+      </div>
+      <div class="kg-treat-btn" id="treatShrimp" data-treat="🍤">
+        🍤<span class="treat-label">Shrimp</span>
+      </div>
+      <div class="kg-treat-btn" id="treatCookie" data-treat="🍪">
+        🍪<span class="treat-label">Cookie</span>
+      </div>
+    </div>
+
+    <!-- treat target label -->
+    <div class="kg-treat-target" id="kgTreatTarget" style="opacity:0">feeding…</div>
+
+    <!-- pet unlock zone -->
+    <div class="kg-pet-zone" id="kgPetZone">
+      <div class="kg-pet-bubble">
+        <div class="kg-pet-title" id="petTitle">Pet me! 🐾</div>
+        <div class="kg-pet-sub" id="petSub">They love you — click the kitty!</div>
+        <span class="kg-pet-cat-emoji" id="petCatEmoji">🐱</span>
+        <div class="kg-purr" id="petPurr"></div>
+      </div>
+    </div>
+  `;
+
+  /* ─── Draw kawaii cat on canvas ─────────────── */
+  function drawCat(canvasEl, bodyColor, accentColor, eyeColor, blushColor) {
+    const c = canvasEl.getContext('2d');
+    c.clearRect(0, 0, 80, 88);
+
+    // tail
+    c.beginPath();
+    c.moveTo(68,76);c.bezierCurveTo(90,60,88,40,72,44);
+    c.strokeStyle=bodyColor;c.lineWidth=7;c.lineCap='round';c.stroke();
+
+    // body
+    c.beginPath();
+    c.ellipse(40,68,26,20,0,0,Math.PI*2);
+    c.fillStyle=bodyColor;c.fill();
+
+    // tummy
+    c.beginPath();
+    c.ellipse(40,70,13,11,0,0,Math.PI*2);
+    c.fillStyle=accentColor;c.fill();
+
+    // head
+    c.beginPath();
+    c.arc(40,38,22,0,Math.PI*2);
+    c.fillStyle=bodyColor;c.fill();
+
+    // ears
+    c.beginPath();
+    c.moveTo(20,24);c.lineTo(14,8);c.lineTo(30,18);
+    c.fillStyle=bodyColor;c.fill();
+    c.beginPath();
+    c.moveTo(60,24);c.lineTo(66,8);c.lineTo(50,18);
+    c.fillStyle=bodyColor;c.fill();
+
+    // inner ears
+    c.beginPath();
+    c.moveTo(21,23);c.lineTo(17,12);c.lineTo(28,19);
+    c.fillStyle=blushColor;c.fill();
+    c.beginPath();
+    c.moveTo(59,23);c.lineTo(63,12);c.lineTo(52,19);
+    c.fillStyle=blushColor;c.fill();
+
+    // face - eyes
+    c.beginPath();
+    c.arc(32,36,4.5,0,Math.PI*2);
+    c.fillStyle=eyeColor;c.fill();
+    c.beginPath();
+    c.arc(48,36,4.5,0,Math.PI*2);
+    c.fillStyle=eyeColor;c.fill();
+    // eye shine
+    c.beginPath();c.arc(34,34,1.5,0,Math.PI*2);c.fillStyle='#fff';c.fill();
+    c.beginPath();c.arc(50,34,1.5,0,Math.PI*2);c.fillStyle='#fff';c.fill();
+
+    // blush
+    c.beginPath();c.ellipse(26,42,5,3.5,-.3,0,Math.PI*2);
+    c.fillStyle=blushColor;c.globalAlpha=.6;c.fill();c.globalAlpha=1;
+    c.beginPath();c.ellipse(54,42,5,3.5,.3,0,Math.PI*2);
+    c.fillStyle=blushColor;c.globalAlpha=.6;c.fill();c.globalAlpha=1;
+
+    // nose
+    c.beginPath();c.arc(40,41,2,0,Math.PI*2);
+    c.fillStyle='#E8A0B0';c.fill();
+
+    // mouth
+    c.beginPath();c.moveTo(38,43);c.quadraticCurveTo(40,46,42,43);
+    c.strokeStyle='#C07080';c.lineWidth=1.2;c.stroke();
+
+    // whiskers
+    c.strokeStyle='rgba(100,80,60,.4)';c.lineWidth=1;
+    c.beginPath();c.moveTo(20,40);c.lineTo(35,42);c.stroke();
+    c.beginPath();c.moveTo(20,43);c.lineTo(35,44);c.stroke();
+    c.beginPath();c.moveTo(60,40);c.lineTo(45,42);c.stroke();
+    c.beginPath();c.moveTo(60,43);c.lineTo(45,44);c.stroke();
+
+    // paws
+    c.beginPath();c.ellipse(28,83,9,6,-.2,0,Math.PI*2);c.fillStyle=bodyColor;c.fill();
+    c.beginPath();c.ellipse(52,83,9,6,.2,0,Math.PI*2);c.fillStyle=bodyColor;c.fill();
+  }
+
+  function drawCatHappy(canvasEl, bodyColor, accentColor, eyeColor, blushColor) {
+    const c = canvasEl.getContext('2d');
+    drawCat(canvasEl, bodyColor, accentColor, eyeColor, blushColor);
+    // happy eyes (^.^)
+    c.strokeStyle=eyeColor;c.lineWidth=2.5;c.lineCap='round';
+    c.beginPath();c.arc(32,37,3.5,Math.PI,0);c.stroke();// left ^
+    c.beginPath();c.arc(48,37,3.5,Math.PI,0);c.stroke();// right ^
+    // cover old eyes
+    c.beginPath();c.arc(32,36,5.5,0,Math.PI*2);c.fillStyle=bodyColor;c.fill();
+    c.beginPath();c.arc(48,36,5.5,0,Math.PI*2);c.fillStyle=bodyColor;c.fill();
+    // redraw ^
+    c.strokeStyle=eyeColor;c.lineWidth=2.5;
+    c.beginPath();c.arc(32,38,3.5,Math.PI,0,true);c.stroke();
+    c.beginPath();c.arc(48,38,3.5,Math.PI,0,true);c.stroke();
+  }
+
+  /* initial cat draw */
+  drawCat(document.getElementById('nanuCanvas'), '#C8C4D8','#E0DCEC','#5A5080','#F0B8CC');
+  drawCat(document.getElementById('pikaCanvas'), '#E8B888','#F5D4B0','#885020','#F0B8B8');
+
+  /* ─── State ──────────────────────────────────── */
+  let selectedTreat = null;     // emoji string
+  let selectedTreatBtn = null;  // DOM element
+  let heartsNanu = 0;
+  let heartsPika = 0;
+  const MAX_HEARTS = 5;
+  let nanuUnlocked = false;
+  let pikaUnlocked = false;
+  let petCount = 0;
+
+  const PURRS = ['Purrrr~ 💜','Mrrrow ✨','*kneading intensifies* 🐾','headbutt 💕','so cozy 🌸','mrrp~ 💜'];
+
+  function setStatus(msg){ document.getElementById('kgStatus').textContent = msg; }
+
+  /* ─── Select a treat ────────────────────────── */
+  garden.querySelectorAll('.kg-treat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(selectedTreatBtn) selectedTreatBtn.style.boxShadow = '';
+      selectedTreat = btn.dataset.treat;
+      selectedTreatBtn = btn;
+      btn.style.boxShadow = '0 0 0 3px var(--terracotta)';
+      const target = document.getElementById('kgTreatTarget');
+      target.style.opacity = '1';
+      target.textContent = `${selectedTreat} selected — click a cat!`;
+      setStatus(`You picked ${selectedTreat}! Now click Nanu or Pika 🐾`);
+    });
+  });
+
+  /* ─── Click cat cushion to feed ─────────────── */
+  ['cushionNanu','cushionPika'].forEach(id => {
+    const cushion = document.getElementById(id);
+    const catName = id === 'cushionNanu' ? 'Nanu' : 'Pika';
+    cushion.addEventListener('click', e => {
+      if(!selectedTreat){
+        setStatus(`Pick a treat from the tray first! 🐟`);
+        cushion.style.transform = 'rotate(-5deg)';
+        setTimeout(()=>cushion.style.transform='',300);
+        return;
+      }
+      const isNanu = id === 'cushionNanu';
+      if(isNanu && nanuUnlocked){ setStatus(`Nanu is happy — pet her! 🌸`); return; }
+      if(!isNanu && pikaUnlocked){ setStatus(`Pika is happy — pet her! 🌸`); return; }
+
+      // fly treat from tray to cat
+      flyTreat(selectedTreat, cushion, () => feedCat(catName));
+
+      // deselect treat
+      if(selectedTreatBtn) selectedTreatBtn.style.boxShadow = '';
+      selectedTreat = null; selectedTreatBtn = null;
+      document.getElementById('kgTreatTarget').style.opacity = '0';
+    });
+  });
+
+  function feedCat(name){
+    const isNanu = name === 'Nanu';
+    const heartsArr = isNanu ? document.querySelectorAll('#heartsNanu .kg-heart') : document.querySelectorAll('#heartsPika .kg-heart');
+    if(isNanu){ heartsNanu = Math.min(MAX_HEARTS, heartsNanu+1); }
+    else       { heartsPika = Math.min(MAX_HEARTS, heartsPika+1); }
+    const count = isNanu ? heartsNanu : heartsPika;
+
+    // fill hearts
+    heartsArr.forEach((h,i) => {
+      if(i < count){ setTimeout(()=>{ h.classList.add('filled'); }, i*80); }
+    });
+
+    // happy reaction
+    const canvas = document.getElementById(isNanu ? 'nanuCanvas' : 'pikaCanvas');
+    if(isNanu) drawCatHappy(canvas,'#C8C4D8','#E0DCEC','#5A5080','#F0B8CC');
+    else       drawCatHappy(canvas,'#E8B888','#F5D4B0','#885020','#F0B8B8');
+    setTimeout(()=>{
+      if(count < MAX_HEARTS){
+        if(isNanu) drawCat(canvas,'#C8C4D8','#E0DCEC','#5A5080','#F0B8CC');
+        else       drawCat(canvas,'#E8B888','#F5D4B0','#885020','#F0B8B8');
+      }
+    }, 900);
+
+    setStatus(`${name} loved that! ${count}/${MAX_HEARTS} hearts 🩷`);
+
+    if(count >= MAX_HEARTS){
+      if(isNanu && !nanuUnlocked){ nanuUnlocked = true; unlockPetting(name); }
+      if(!isNanu && !pikaUnlocked){ pikaUnlocked = true; unlockPetting(name); }
+    }
+  }
+
+  function unlockPetting(name){
+    const zone = document.getElementById('kgPetZone');
+    const title = document.getElementById('petTitle');
+    const sub = document.getElementById('petSub');
+    const emoji = document.getElementById('petCatEmoji');
+    title.textContent = `${name} loves you! 🐾`;
+    sub.textContent = `${name} has 5 hearts — time for pets! Click her to say hello 💜`;
+    emoji.textContent = name === 'Nanu' ? '🐱' : '🐈';
+    zone.classList.add('active');
+    setStatus(`🎉 ${name} is ready to be pet! Click her in the bubble!`);
+    // confetti
+    spawnHearts(12);
+  }
+
+  document.getElementById('petCatEmoji').addEventListener('click', () => {
+    petCount++;
+    const purr = PURRS[Math.floor(Math.random()*PURRS.length)];
+    spawnPurrFloat(purr);
+    document.getElementById('petPurr').textContent = purr;
+    // wiggle
+    const em = document.getElementById('petCatEmoji');
+    em.style.animation = 'none';
+    em.style.transform = `rotate(${Math.random()>0.5?15:-15}deg) scale(1.3)`;
+    setTimeout(()=>{ em.style.transform=''; em.style.animation=''; }, 300);
+    // hearts
+    spawnHearts(4);
+    if(petCount % 5 === 0) setStatus(`${petCount} pets! They're in heaven 💜💜💜`);
+  });
+
+  /* ─── Flying treat animation ─────────────────── */
+  function flyTreat(emoji, targetEl, onDone){
+    const trayRect = document.getElementById('kgTreatTray').getBoundingClientRect();
+    const gardenRect = garden.getBoundingClientRect();
+    const targetRect = targetEl.getBoundingClientRect();
+
+    const startX = trayRect.left + trayRect.width/2 - gardenRect.left;
+    const startY = trayRect.top + trayRect.height/2 - gardenRect.top;
+    const endX = targetRect.left + targetRect.width/2 - gardenRect.left;
+    const endY = targetRect.top + targetRect.height/2 - gardenRect.top;
+
+    const ft = document.createElement('div');
+    ft.className='kg-flying-treat';
+    ft.textContent = emoji;
+    ft.style.left = startX+'px';
+    ft.style.top = startY+'px';
+    ft.style.setProperty('--tx', (endX-startX)+'px');
+    ft.style.setProperty('--ty', (endY-startY)+'px');
+    garden.appendChild(ft);
+    setTimeout(()=>{ ft.remove(); onDone(); }, 560);
+  }
+
+  /* ─── Purr float ─────────────────────────────── */
+  function spawnPurrFloat(text){
+    const zone = document.getElementById('kgPetZone');
+    const rect = zone.getBoundingClientRect();
+    const gardenRect = garden.getBoundingClientRect();
+    const p = document.createElement('div');
+    p.className='kg-purr-float';
+    p.textContent = text;
+    p.style.left = (rect.left - gardenRect.left + rect.width/2 - 40)+'px';
+    p.style.top  = (rect.top  - gardenRect.top  + 60)+'px';
+    garden.appendChild(p);
+    setTimeout(()=>p.remove(), 950);
+  }
+
+  /* ─── Spawn floating hearts (unlock celebration) */
+  function spawnHearts(count){
+    for(let i=0;i<count;i++){
+      setTimeout(()=>{
+        const h = document.createElement('div');
+        h.style.cssText = `position:absolute;font-size:${1+Math.random()}rem;
+          left:${10+Math.random()*80}%;top:${20+Math.random()*60}%;
+          pointer-events:none;z-index:25;opacity:0;
+          animation:purrUp ${.7+Math.random()*.5}s ease forwards`;
+        h.textContent = ['💜','🩷','💕','💗','✨'][Math.floor(Math.random()*5)];
+        garden.appendChild(h);
+        setTimeout(()=>h.remove(),1200);
+      }, i*80);
+    }
+  }
+})();
+
 </script>
 </body>
 </html>
