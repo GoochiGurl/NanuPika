@@ -3,10 +3,9 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/NanuPika/',
+  base: '/',
   plugins: [vue()],
   build: {
-    outDir: './',
-    emptyOutDir: false,
+    outDir: 'dist',
   }
 })
