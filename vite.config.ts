@@ -6,6 +6,7 @@ export default defineConfig({
   base: '/NanuPika/',
   plugins: [vue()],
   build: {
-    outDir: 'docs'
+    outDir: './',
+    emptyOutDir: false,
   }
 })
