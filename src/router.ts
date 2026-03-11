@@ -1,8 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from './Home.vue'
-import Games from './Games.vue'
-import Art from './Art.vue'
-import Travel from './Travel.vue'
 
 // 1. Define your routes
 const routes = [
