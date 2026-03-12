@@ -93,14 +93,15 @@ const hoveredPin = ref(null)
 const selectedPin = ref(null)
 
 const locations = [
-  { name: 'Bear Flag Fish Co', area: 'Crystal Cove', x: 420, y: 140, summary: 'Add your reason for featuring this spot.' },
-  { name: 'Sawdust Festival', area: 'Laguna Beach', x: 400, y: 270, summary: 'Add your reason for featuring this spot.' },
-  { name: 'Strands Beach', area: 'Dana Point', x: 430, y: 440, summary: 'Add your reason for featuring this spot.' },
-  { name: 'Farmers Market', area: 'Dana Point', x: 470, y: 490, summary: 'Add your reason for featuring this spot.' },
-  { name: "Bruster's Ice Cream", area: 'Dana Point', x: 490, y: 530, summary: 'Add your reason for featuring this spot.' },
-  { name: 'Capistrano Beach', area: 'Capistrano Beach', x: 440, y: 670, summary: 'Add your reason for featuring this spot.' },
-  { name: "Trevor's at the Tracks", area: 'San Juan Capistrano', x: 500, y: 780, summary: 'Add your reason for featuring this spot.' },
-  { name: 'The Ecology Center', area: 'San Juan Capistrano', x: 540, y: 830, summary: 'Add your reason for featuring this spot.' },
+  { name: 'Bear Flag Fish Co', area: 'Crystal Cove', x: 420, y: 140, summary: 'Amazing Poke and Fish Tacos, great ocean view.' },
+  { name: 'Sawdust Festival', area: 'Laguna Beach', x: 400, y: 270, summary: 'Local tradition of artists. You have to see the glass blowing and hang out for some music or drinks' },
+  { name: 'Strands Beach', area: 'Dana Point', x: 430, y: 440, summary: 'Gorgeous secluded walk to a little basketball court and Youngs Beach Shack.' },
+  { name: 'Farmers Market', area: 'Dana Point', x: 470, y: 490, summary: 'Soaps, honeys, veggies and cuties.' },
+  { name: "Bruster's Ice Cream", area: 'Dana Point', x: 490, y: 530, summary: 'Best spot in town.' },
+  { name: 'Capistrano Beach', area: 'Capistrano Beach', x: 440, y: 670, summary: 'Lovely.' },
+  { name: "Trevor's at the Tracks", area: 'San Juan Capistrano', x: 500, y: 780, summary: 'Live music, food and drinks.' },
+  { name: 'The Ecology Center', area: 'San Juan Capistrano', x: 540, y: 830, summary: 'Local farming, yoga, sound baths, permaculture classes and strawberry picking' },
+  { name: 'Victoria Beach Sand Castle', area: 'Laguna Beach', x: 350, y: 260, summary: 'Photoesque famous.' },
 ]
 
 const activeIndex = computed(() => selectedPin.value ?? hoveredPin.value)
