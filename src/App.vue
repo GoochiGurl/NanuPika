@@ -378,7 +378,7 @@ button {
 .footer-photo {
   width: 100%;
   height: 120px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 12px;
   margin-bottom: 16px;
   opacity: 0.75;
