@@ -5,7 +5,7 @@
     <section class="hero">
       <div class="hero-inner section-container">
         <div class="hero-text">
-          <p class="hero-kicker" ref="kicker">Ceramicist · Leader · Coastal Wanderer</p>
+          <p class="hero-kicker" ref="kicker">Leader · Ceramicist · Coastal Wanderer</p>
           <h1 class="hero-title" ref="title">
             <span class="hero-line">Courtney</span>
             <span class="hero-line hero-line--accent">Gooch</span>
@@ -42,14 +42,12 @@
         <div class="about-content">
           <h2 class="section-title">About Me</h2>
           <p class="about-bio">
-            I'm Courtney — a ceramicist, leader, and someone who finds peace where the tide meets the sand. 
-            My creative practice is rooted in wabi-sabi: embracing imperfection, finding beauty in the weathered 
-            and the worn. When I'm not throwing clay or exploring Orange County's coastline, I'm building 
-            communities, telling stories, and chasing the golden hour with my two cats in tow.
+            I’m a solar industry leader with more than a decade of experience building and scaling operations that power growth. I currently serve as Senior Director of Operations Effectiveness at the nation’s leading residential solar company, where I also act as Chief of Staff to the COO. My work sits at the intersection of strategy and execution — translating big ideas into systems, programs, and teams that deliver results.
+Over the course of my career, I’ve led initiatives across training, technology, and large-scale operational transformation. But more than processes or programs, my focus has always been people. I’m particularly passionate about leadership that works in the real world — practical, human-centered approaches that help teams grow, navigate change, and perform at a high level. Whether I’m building programs, leading teams, or advising executives, my goal is the same: create clarity, unlock potential, and drive meaningful progress.
+Outside of work, I spend my time throwing clay in the pottery studio, experimenting with new recipes, and chasing sunsets.
           </p>
           <p class="about-bio">
-            I believe the best things in life have a little grit in them — like sea glass, like driftwood, 
-            like the cracks in a raku glaze. Welcome to my corner of the coast.
+           Welcome to my corner of the coast.
           </p>
         </div>
       </div>
@@ -154,40 +152,20 @@ const resumeOpen = ref(false)
 
 const mediaItems = [
   {
-    type: 'Podcast',
-    title: 'The Clay & Coast Hour',
-    description: 'Talking creative practice, coastal living, and finding beauty in imperfection.',
-    url: '#'
-  },
-  {
     type: 'Interview',
-    title: 'OC Arts Monthly Feature',
-    description: 'A deep-dive into the intersection of ceramics and community building.',
-    url: '#'
+    title: 'FairyGodBoss',
+    description: 'Women in the Workplace: Insights From Successful Leaders',
+    url: 'https://fairygodboss.com/events/BIQGMptEZ/women-in-the-workplace-insights'
   },
-  {
-    type: 'Podcast',
-    title: 'Makers & Wanderers',
-    description: 'On the art of slowing down and letting the work speak for itself.',
-    url: '#'
-  },
-  {
-    type: 'Feature',
-    title: 'Dana Point Living',
-    description: 'Profiles in coastal creativity — my studio practice and daily rituals.',
-    url: '#'
-  }
+ 
 ]
 
 const experience = [
   { role: 'Studio Ceramicist', org: 'Independent Practice', dates: '2021 – Present' },
-  { role: 'Community Lead', org: 'OC Makers Collective', dates: '2020 – Present' },
-  { role: 'Program Coordinator', org: 'Coastal Arts Foundation', dates: '2018 – 2021' },
 ]
 
 const education = [
-  { degree: 'BFA, Ceramics', school: 'California College of the Arts', dates: '2014 – 2018' },
-  { degree: 'Leadership Certificate', school: 'UCI Extension', dates: '2020' },
+  { degree: 'Associates, Interior Architecture', school: 'Interior Designers Institute', dates: '2012' },
 ]
 
 const skills = [
