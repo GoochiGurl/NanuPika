@@ -8,6 +8,11 @@
     </section>
 
     <section class="section-container">
+
+      <div class="game-card">
+        <PikasCrossing />
+      </div>
+
       <div class="game-card organic-card">
         <div class="game-header">
           <div>
@@ -88,6 +93,7 @@
 
 <script setup>
 import { ref, reactive, onUnmounted, nextTick } from 'vue'
+import PikasCrossing from './PikaCrossing.vue'
 
 const EMOJIS = ['🐕', '🐱', '🐈', '💜', '🩷', '🐾', '🐕', '🐱']
 const SPARKLE_EMOJIS = ['✨', '💫', '⭐', '🌟', '💜', '🩷', '💖', '🐾', '✧', '♡']

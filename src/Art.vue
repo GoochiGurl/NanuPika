@@ -93,6 +93,15 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import imgCollab      from './assets/Public/Collab.jpeg'
+import imgBricks      from './assets/Public/ceramics/Bricks.jpeg'
+import imgCeramics    from './assets/Public/ceramics/Ceramics.jpeg'
+import imgVasePlate   from './assets/Public/ceramics/VasePlate.jpeg'
+import imgBurner      from './assets/Public/ceramics/Burner.jpeg'
+import imgHolder      from './assets/Public/ceramics/Holder.jpeg'
+import imgFlyingPig   from './assets/Public/ceramics/FlyingPig.jpeg'
+import imgPlate       from './assets/Public/ceramics/Plate.jpeg'
+import imgHomeNumbers from './assets/Public/ceramics/HomeNumbers.jpeg'
 
 const columns = ref(3)
 const viewMode = ref('grid')
@@ -100,15 +109,15 @@ const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
 
 const artworks = ref([
-  { id: 1, title: 'Tidal Memory', year: '2024', medium: 'Stoneware', details: 'Wheel-thrown vessel with salt-fired glaze, inspired by Crystal Cove tide pools.', img: 'src/assets/Public/Collab.jpeg', icon: '🏺', tall: true, gradient: 'linear-gradient(135deg, #CCCCFF 0%, #D4E8E0 100%)' },
-  { id: 2, title: 'Drift I', year: '2024', medium: 'Porcelain', details: 'Hand-built slab construction with oxide wash. Embracing the warp.', img: 'src/assets/Public/ceramics/Bricks.jpeg', icon: '🫖', tall: false, gradient: 'linear-gradient(135deg, #E0E0FF 0%, #F0D8D0 100%)' },
-  { id: 3, title: 'Erosion Study', year: '2023', medium: 'Mixed Media', details: 'Clay, sand, and found driftwood. An experiment in controlled decay.', img: '#', icon: '🪨', tall: false, gradient: 'linear-gradient(135deg, #C4A882 0%, #CCCCFF 100%)' },
-  { id: 4, title: 'Shore Leave', year: '2023', medium: 'Raku', details: 'Copper matte raku with horsehair carbonization. Each firing a surprise.', img: '#', icon: '✨', tall: true, gradient: 'linear-gradient(135deg, #D4E8E0 0%, #E8E0D0 100%)' },
-  { id: 5, title: 'Salt & Ash', year: '2023', medium: 'Stoneware', details: 'Wood-fired serving bowl. 36-hour kiln marathon. Worth every hour.', img: '#', icon: '🍶', tall: false, gradient: 'linear-gradient(135deg, #F5F0E8 0%, #CCCCFF 100%)' },
-  { id: 6, title: 'Impermanence', year: '2022', medium: 'Porcelain', details: 'Paper-thin translucent porcelain. Cracked intentionally, repaired with gold.', img: '#', icon: '💫', tall: false, gradient: 'linear-gradient(135deg, #CCCCFF 0%, #F0D8D0 100%)' },
-  { id: 7, title: 'Coastal Fragment', year: '2022', medium: 'Ceramic + Found Object', details: 'Beach glass and clay composite tile series. 12 pieces, each unique.', img: '#', icon: '🐚', tall: true, gradient: 'linear-gradient(135deg, #B8B8E8 0%, #D4E8E0 100%)' },
-  { id: 8, title: 'Morning Glaze', year: '2024', medium: 'Stoneware', details: 'Layered celadon and ash glazes. Fired to cone 10 in reduction.', img: '#', icon: '🫙', tall: false, gradient: 'linear-gradient(135deg, #D4E8E0 0%, #CCCCFF 100%)' },
-  { id: 9, title: 'Wabi Bowl Set', year: '2024', medium: 'Stoneware', details: 'Set of 5 intentionally irregular nesting bowls. No two alike.', img: '#', icon: '🥣', tall: false, gradient: 'linear-gradient(135deg, #E8E0D0 0%, #E0E0FF 100%)' },
+  { id: 1, title: 'Tidal Memory',      year: '2024', medium: 'Stoneware',            details: 'Wheel-thrown vessel with salt-fired glaze, inspired by Crystal Cove tide pools.', img: imgCollab,      icon: '🏺', tall: true,  gradient: 'linear-gradient(135deg, #CCCCFF 0%, #D4E8E0 100%)' },
+  { id: 2, title: 'Drift I',           year: '2024', medium: 'Porcelain',             details: 'Hand-built slab construction with oxide wash. Embracing the warp.',               img: imgBricks,      icon: '🫖', tall: false, gradient: 'linear-gradient(135deg, #E0E0FF 0%, #F0D8D0 100%)' },
+  { id: 3, title: 'Erosion Study',     year: '2023', medium: 'Mixed Media',           details: 'Clay, sand, and found driftwood. An experiment in controlled decay.',              img: imgCeramics,    icon: '🪨', tall: false, gradient: 'linear-gradient(135deg, #C4A882 0%, #CCCCFF 100%)' },
+  { id: 4, title: 'Shore Leave',       year: '2023', medium: 'Raku',                  details: 'Copper matte raku with horsehair carbonization. Each firing a surprise.',          img: imgVasePlate,   icon: '✨', tall: true,  gradient: 'linear-gradient(135deg, #D4E8E0 0%, #E8E0D0 100%)' },
+  { id: 5, title: 'Salt & Ash',        year: '2023', medium: 'Stoneware',             details: 'Wood-fired serving bowl. 36-hour kiln marathon. Worth every hour.',               img: imgBurner,      icon: '🍶', tall: false, gradient: 'linear-gradient(135deg, #F5F0E8 0%, #CCCCFF 100%)' },
+  { id: 6, title: 'Impermanence',      year: '2022', medium: 'Porcelain',             details: 'Paper-thin translucent porcelain. Cracked intentionally, repaired with gold.',    img: imgHolder,      icon: '💫', tall: false, gradient: 'linear-gradient(135deg, #CCCCFF 0%, #F0D8D0 100%)' },
+  { id: 7, title: 'Coastal Fragment',  year: '2022', medium: 'Ceramic + Found Object',details: 'Beach glass and clay composite tile series. 12 pieces, each unique.',             img: imgFlyingPig,   icon: '🐚', tall: true,  gradient: 'linear-gradient(135deg, #B8B8E8 0%, #D4E8E0 100%)' },
+  { id: 8, title: 'Morning Glaze',     year: '2024', medium: 'Stoneware',             details: 'Layered celadon and ash glazes. Fired to cone 10 in reduction.',                  img: imgPlate,       icon: '🫙', tall: false, gradient: 'linear-gradient(135deg, #D4E8E0 0%, #CCCCFF 100%)' },
+  { id: 9, title: 'Wabi Bowl Set',     year: '2024', medium: 'Stoneware',             details: 'Set of 5 intentionally irregular nesting bowls. No two alike.',                   img: imgHomeNumbers, icon: '🥣', tall: false, gradient: 'linear-gradient(135deg, #E8E0D0 0%, #E0E0FF 100%)' },
 ])
 
 function openLightbox(i) {

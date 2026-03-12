@@ -34,9 +34,10 @@
       <div class="about-grid">
         <div class="about-photo-wrap">
           <div class="about-photo organic-card">
-            <div class="photo-placeholder">
-              <span>Photo</span>
-            </div>
+            <img :src="imgSpunky" alt="Courtney Gooch" class="about-img" />
+          </div>
+          <div class="about-photo organic-card about-photo--secondary">
+            <img :src="imgVacation" alt="Courtney Gooch" class="about-img" />
           </div>
         </div>
         <div class="about-content">
@@ -131,9 +132,7 @@ Outside of work, I spend my time throwing clay in the pottery studio, experiment
       <div class="fam-grid">
         <div class="fam-card organic-card" v-for="cat in cats" :key="cat.name">
           <div class="fam-photo">
-            <div class="photo-placeholder cat-placeholder">
-              <span>{{ cat.emoji }}</span>
-            </div>
+            <img :src="cat.img" :alt="cat.name" class="cat-photo" />
           </div>
           <h3 class="fam-name">{{ cat.name }}</h3>
           <p class="fam-desc">{{ cat.desc }}</p>
@@ -146,6 +145,10 @@ Outside of work, I spend my time throwing clay in the pottery studio, experiment
 
 <script setup>
 import { ref } from 'vue'
+import imgSpunky  from './assets/Public/Spunky.jpg'
+import imgVacation from './assets/Public/Vacation.jpg'
+import imgNanu    from './assets/Public/Nanu.jpeg'
+import imgPika    from './assets/Public/Pika.jpeg'
 
 const mediaOpen = ref(false)
 const resumeOpen = ref(false)
@@ -174,8 +177,8 @@ const skills = [
 ]
 
 const cats = [
-  { name: 'Nanu', emoji: '🐱', desc: 'The dignified one. Prefers high places, morning sun, and judging humans.' },
-  { name: 'Pika', emoji: '🐈', desc: 'The chaos agent. Knocks things off tables with zero remorse and endless charm.' }
+  { name: 'Nanu', img: imgNanu, desc: 'The dignified one. Prefers high places, morning sun, and judging humans.' },
+  { name: 'Pika', img: imgPika, desc: 'The chaos agent. Knocks things off tables with zero remorse and endless charm.' }
 ]
 </script>
 
@@ -299,18 +302,17 @@ const cats = [
   padding: 0;
 }
 
-.photo-placeholder {
+.about-img {
   width: 100%;
+  display: block;
+  object-fit: cover;
   aspect-ratio: 3/4;
-  background: linear-gradient(135deg, var(--periwinkle-soft), var(--sand-dark));
   border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  color: var(--driftwood);
-  font-style: italic;
+}
+
+.about-photo--secondary {
+  margin-top: 16px;
+  transform: translateX(12px);
 }
 
 .about-bio {
@@ -505,13 +507,15 @@ const cats = [
   margin-bottom: 20px;
 }
 
-.cat-placeholder {
-  aspect-ratio: 1;
+.cat-photo {
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  max-width: 200px;
+  object-fit: cover;
+  object-position: center top;
   margin: 0 auto;
-  font-size: 3rem;
-  background: linear-gradient(135deg, var(--periwinkle-soft), var(--sea-foam));
+  display: block;
+  border: 3px solid var(--periwinkle-soft);
 }
 
 .fam-name {

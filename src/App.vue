@@ -38,6 +38,7 @@
     <footer class="site-footer">
       <div class="footer-inner">
         <div class="footer-brand">
+          <img :src="imgHere" alt="" class="footer-photo" />
           <span class="footer-name">Courtney Gooch</span>
           <span class="footer-tagline">Ceramicist · Leader · Coastal Wanderer</span>
         </div>
@@ -59,6 +60,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import imgHere from './assets/Public/here.jpg'
 
 const isScrolled = ref(false)
 const menuOpen = ref(false)
@@ -371,6 +373,16 @@ button {
   grid-template-columns: 1fr auto auto;
   gap: 40px;
   align-items: start;
+}
+
+.footer-photo {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  opacity: 0.75;
+  display: block;
 }
 
 .footer-name {
