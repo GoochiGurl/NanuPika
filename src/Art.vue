@@ -31,7 +31,6 @@
           @click="openLightbox(i)"
         >
           <div class="mosaic-img" :style="{ background: work.gradient }">
-            <span class="mosaic-placeholder-icon">{{ work.icon }}</span>
             <img :src="work.img" />
           </div>
           <div class="mosaic-overlay">
@@ -53,7 +52,7 @@
           @click="openLightbox(i)"
         >
           <div class="carousel-img" :style="{ background: work.gradient }">
-            <span class="carousel-placeholder-icon">{{ work.icon }}</span>
+            <img :src="work.img" />
           </div>
           <div class="carousel-info">
             <h3>{{ work.title }}</h3>
@@ -76,7 +75,7 @@
           <button class="lightbox-prev" @click="lightboxPrev">‹</button>
           <div class="lightbox-content">
             <div class="lightbox-img" :style="{ background: artworks[lightboxIndex].gradient }">
-              <span class="lightbox-icon">{{ artworks[lightboxIndex].icon }}</span>
+              <img :src="artworks[lightboxIndex].img" />
             </div>
             <div class="lightbox-info">
               <h2>{{ artworks[lightboxIndex].title }}</h2>
@@ -269,9 +268,11 @@ function onCarouselWheel(e) {
   min-height: 300px;
 }
 
-.mosaic-placeholder-icon {
-  font-size: 3rem;
-  opacity: 0.6;
+.mosaic-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: flex;
 }
 
 .mosaic-overlay {
@@ -360,9 +361,11 @@ function onCarouselWheel(e) {
   flex-shrink: 0;
 }
 
-.carousel-placeholder-icon {
-  font-size: 4rem;
-  opacity: 0.5;
+.carousel-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: flex;
 }
 
 .carousel-info {
@@ -478,9 +481,11 @@ function onCarouselWheel(e) {
   justify-content: center;
 }
 
-.lightbox-icon {
-  font-size: 5rem;
-  opacity: 0.4;
+.lightbox-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: flex;
 }
 
 .lightbox-info {

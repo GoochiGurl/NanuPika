@@ -87,12 +87,69 @@
           <p>{{ isMobile ? 'Tap' : 'Click' }} a critter to catch it! They'll flee your {{ isMobile ? 'finger' : 'cursor' }}, so be quick.</p>
         </div>
       </div>
+
+      <!-- Feeding Game Scaffold -->
+      <div class="game-card organic-card game-scaffold">
+        <div class="game-header">
+          <div>
+            <h2 class="game-title">Feeding Time</h2>
+            <p class="game-desc">Drop some kibble for the critters.</p>
+          </div>
+          <div class="game-score">
+            <span class="score-label">Kibbles</span>
+            <span class="score-value">{{ kibbles }}</span>
+          </div>
+        </div>
+        <div class="placeholder-zone">
+          <button class="hero-link-pill" @click="kibbles++">Drop a Kibble 🐟</button>
+        </div>
+      </div>
+
+      <!-- Chore Wheel Scaffold -->
+      <div class="game-card organic-card game-scaffold">
+        <div class="game-header">
+          <div>
+            <h2 class="game-title">Chore Wheel</h2>
+            <p class="game-desc">Spin the wheel. Then go on your scavenger hunt to verify!</p>
+          </div>
+        </div>
+        <div class="placeholder-zone">
+           <p v-if="currentChore" class="chore-result">You got: <strong>{{ currentChore }}</strong></p>
+           <button class="hero-link-pill" @click="spinWheel">Spin Wheel 🎡</button>
+        </div>
+      </div>
+
+      <!-- Gamified To-Do -->
+      <div class="game-card organic-card game-scaffold">
+        <div class="game-header">
+          <div>
+            <h2 class="game-title">Gamified To-Do List</h2>
+            <p class="game-desc">Check things off to reveal what your focus says about you.</p>
+          </div>
+          <div class="game-score">
+            <span class="score-label">Psyche Level</span>
+            <span class="score-value">{{ completedTasks }}/{{ tasks.length }}</span>
+          </div>
+        </div>
+        <div class="placeholder-zone todo-zone">
+           <ul class="todo-list">
+             <li v-for="t in tasks" :key="t.id">
+               <label>
+                 <input type="checkbox" v-model="t.done" />
+                 <span :class="{ 'done-text': t.done }">{{ t.label }} ({{ t.points }} pts)</span>
+               </label>
+             </li>
+           </ul>
+           <p class="psycho-result" v-if="psychoResult">{{ psychoResult }}</p>
+        </div>
+      </div>
+
     </section>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onUnmounted, nextTick } from 'vue'
+import { ref, reactive, onUnmounted, nextTick, computed } from 'vue'
 import PikasCrossing from './PikaCrossing.vue'
 
 const EMOJIS = ['🐕', '🐱', '🐈', '💜', '🩷', '🐾', '🐕', '🐱']
@@ -274,6 +331,28 @@ function catchCritter(index) {
   }, 500)
 }
 
+// --- New Games Scaffold State ---
+const kibbles = ref(0)
+
+const chores = ['Clean litterbox', 'Vacuum living room', 'Water the plants', 'Do the dishes']
+const currentChore = ref('')
+const spinWheel = () => {
+  currentChore.value = chores[Math.floor(Math.random() * chores.length)]
+}
+
+const tasks = reactive([
+  { id: 1, label: 'Answer emails', points: 10, done: false },
+  { id: 2, label: 'Feed the cats', points: 20, done: false },
+  { id: 3, label: 'Go for a walk', points: 30, done: false }
+])
+
+const completedTasks = computed(() => tasks.filter(t => t.done).length)
+const psychoResult = computed(() => {
+  if (completedTasks.value === 0) return ''
+  if (completedTasks.value === tasks.length) return "Psychoanalysis: You are completely unstoppable today. Go take a nap."
+  return "Psychoanalysis: You are making solid progress. Keep that momentum."
+})
+
 onUnmounted(() => {
   if (animFrame) cancelAnimationFrame(animFrame)
 })
@@ -438,4 +517,82 @@ onUnmounted(() => {
     cursor: default;
   }
 }
+.game-scaffold {
+  margin-top: 32px;
+}
+
+.placeholder-zone {
+  min-height: 120px;
+  background: var(--sand);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  gap: 16px;
+  border: 1px dashed var(--driftwood);
+}
+
+.hero-link-pill {
+  display: inline-block;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  border: 1.5px solid var(--periwinkle-muted);
+  border-radius: 100px;
+  color: var(--charcoal);
+  transition: all 0.3s var(--ease-out-soft);
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(4px);
+}
+
+.hero-link-pill:hover {
+  background: var(--periwinkle);
+  border-color: var(--periwinkle);
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.chore-result {
+  font-size: 1.1rem;
+  color: var(--periwinkle-deep);
+}
+
+.todo-zone {
+  align-items: flex-start;
+}
+
+.todo-list {
+  list-style: none;
+  width: 100%;
+}
+
+.todo-list li {
+  margin-bottom: 8px;
+}
+
+.todo-list label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.done-text {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.psycho-result {
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--periwinkle-soft);
+  border-radius: 8px;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--driftwood-dark);
+}
+
 </style>

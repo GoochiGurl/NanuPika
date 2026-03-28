@@ -47,6 +47,13 @@
              @mouseleave="hoveredPin = null"
              @click="selectedPin = selectedPin === i ? null : i"
              style="cursor:pointer;">
+            
+            <!-- Hit Area to prevent jitter -->
+            <circle cx="0" cy="-10" r="32" fill="transparent" class="hit-area" />
+            
+            <!-- Ripple -->
+            <circle cx="0" cy="4" r="6" stroke="#9999DD" fill="none" class="water-ripple" v-show="hoveredPin === i || selectedPin === i" />
+
             <!-- Pin shadow -->
             <ellipse cx="0" cy="4" rx="8" ry="3" fill="rgba(0,0,0,0.1)"/>
             <!-- Pin body -->
@@ -173,6 +180,16 @@ const popupStyle = computed(() => {
 
 .map-pin-group:hover .pin-shape {
   transform: scale(1.15);
+}
+
+.water-ripple {
+  animation: ripple 1.5s infinite ease-out;
+  transform-origin: center 4px;
+}
+
+@keyframes ripple {
+  0% { transform: scale(1); opacity: 0.8; stroke-width: 2px; }
+  100% { transform: scale(6); opacity: 0; stroke-width: 0px; }
 }
 
 /* Popup */

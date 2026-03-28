@@ -1,10 +1,11 @@
 <template>
   <div class="app-shell">
-    <!-- Organic blob background decorations -->
-    <div class="bg-blobs" aria-hidden="true">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="blob blob-3"></div>
+    <!-- Gas / Plasma background -->
+    <div class="plasma-bg" aria-hidden="true">
+      <div class="water-base"></div>
+      <div class="water-layer water-layer-1"></div>
+      <div class="water-layer water-layer-2"></div>
+      <canvas ref="canvasRef" class="plasma-canvas"></canvas>
     </div>
 
     <!-- Navigation -->
@@ -17,10 +18,8 @@
         <ul class="nav-links" :class="{ open: menuOpen }">
           <li><router-link to="/" @click="menuOpen = false">Home</router-link></li>
           <li><router-link to="/art" @click="menuOpen = false">Art</router-link></li>
-          <li><router-link to="/travel" @click="menuOpen = false">OC Travel Guide</router-link></li>
+          <li><router-link to="/travel" @click="menuOpen = false">OC Guide</router-link></li>
           <li><router-link to="/games" @click="menuOpen = false">Games</router-link></li>
-          <li><a href="https://substack.com" target="_blank" rel="noopener">Substack</a></li>
-          <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </div>
     </nav>
@@ -49,8 +48,6 @@
           <router-link to="/games">Games</router-link>
         </nav>
         <div class="footer-social">
-          <a href="https://substack.com" target="_blank" rel="noopener">Substack</a>
-          <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
         </div>
         <p class="footer-copy">&copy; {{ new Date().getFullYear() }} Courtney Gooch. All rights reserved.</p>
       </div>
@@ -62,6 +59,73 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import imgHere from './assets/Public/here.jpg'
 
+const canvasRef = ref(null)
+let reqFrame = null
+let lastMouse = { x: -300, y: -300 }
+let particles = []
+
+function onGlobalMouseMove(e) {
+  const dx = e.clientX - lastMouse.x
+  const dy = e.clientY - lastMouse.y
+  const dist = Math.sqrt(dx * dx + dy * dy)
+  
+  if (dist > 5 && canvasRef.value) {
+    particles.push({
+      x: e.clientX,
+      y: e.clientY,
+      vx: dx * 0.08, // Keep some momentum
+      vy: dy * 0.08,
+      radius: 40 + Math.min(dist * 1.5, 120), // Faster moving = broader spread
+      life: 1.0,
+      color: Math.random() > 0.5 ? 'rgba(204, 204, 255, ' : 'rgba(212, 232, 224, ' // Periwinkle or Sea-foam base
+    })
+    lastMouse.x = e.clientX
+    lastMouse.y = e.clientY
+  }
+}
+
+function renderCanvas() {
+  if (!canvasRef.value) return
+  const canvas = canvasRef.value
+  const ctx = canvas.getContext('2d')
+  const w = window.innerWidth
+  const h = window.innerHeight
+  
+  ctx.clearRect(0, 0, w, h)
+  ctx.globalCompositeOperation = 'multiply'
+  
+  for (let i = particles.length - 1; i >= 0; i--) {
+    let p = particles[i]
+    p.life -= 0.012
+    p.x += p.vx
+    p.y += p.vy
+    p.radius += 0.8 // Fluid expansion
+    
+    if (p.life <= 0) {
+      particles.splice(i, 1)
+      continue
+    }
+
+    const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius)
+    grad.addColorStop(0, p.color + (p.life * 0.5) + ')')
+    grad.addColorStop(1, p.color + '0)')
+    
+    ctx.fillStyle = grad
+    ctx.beginPath()
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
+    ctx.fill()
+  }
+  
+  reqFrame = requestAnimationFrame(renderCanvas)
+}
+
+function handleResize() {
+  if (canvasRef.value) {
+    canvasRef.value.width = window.innerWidth
+    canvasRef.value.height = window.innerHeight
+  }
+}
+
 const isScrolled = ref(false)
 const menuOpen = ref(false)
 
@@ -69,8 +133,23 @@ function onScroll() {
   isScrolled.value = window.scrollY > 40
 }
 
-onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
-onUnmounted(() => window.removeEventListener('scroll', onScroll))
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('mousemove', onGlobalMouseMove, { passive: true })
+    renderCanvas()
+  }
+})
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('scroll', onScroll)
+    window.removeEventListener('mousemove', onGlobalMouseMove)
+    window.removeEventListener('resize', handleResize)
+    cancelAnimationFrame(reqFrame)
+  }
+})
 </script>
 
 <style>
@@ -162,63 +241,64 @@ button {
 }
 
 /* ============================================
-   BACKGROUND BLOBS — organic shapes
+   PLASMA / WATER BACKGROUND
    ============================================ */
-.bg-blobs {
+.plasma-bg {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   pointer-events: none;
   overflow: hidden;
+  background: var(--sand-light);
 }
 
-.blob {
+.water-base {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.3;
+  inset: -50%;
+  background: radial-gradient(circle at 50% 50%, var(--sea-foam) 0%, var(--periwinkle-soft) 40%, var(--sand-light) 80%);
+  animation: breatheWater 14s ease-in-out infinite alternate;
+  opacity: 0.6;
 }
 
-.blob-1 {
-  width: 600px;
-  height: 600px;
-  background: var(--periwinkle);
-  top: -200px;
-  right: -100px;
-  animation: blobDrift1 25s ease-in-out infinite;
+.water-layer {
+  position: absolute;
+  inset: -100px;
+  background-size: 200% 200%;
+  opacity: 0.5;
+  filter: blur(60px);
 }
 
-.blob-2 {
-  width: 400px;
-  height: 400px;
-  background: var(--sea-foam);
-  bottom: 20%;
-  left: -150px;
-  animation: blobDrift2 30s ease-in-out infinite;
+.water-layer-1 {
+  background-image: radial-gradient(ellipse at 20% 80%, var(--periwinkle) 0%, transparent 50%),
+                    radial-gradient(ellipse at 80% 20%, var(--coral-faint) 0%, transparent 50%);
+  animation: driftWater 20s linear infinite;
 }
 
-.blob-3 {
-  width: 350px;
-  height: 350px;
-  background: var(--coral-faint);
-  top: 50%;
-  right: 10%;
-  animation: blobDrift3 20s ease-in-out infinite;
+.water-layer-2 {
+  background-image: radial-gradient(circle at 70% 70%, var(--sea-foam) 0%, transparent 60%),
+                    radial-gradient(circle at 30% 30%, var(--periwinkle-deep) 0%, transparent 60%);
+  animation: driftWater 25s linear infinite reverse;
+  mix-blend-mode: soft-light;
 }
 
-@keyframes blobDrift1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-40px, 60px) scale(1.05); }
-  66% { transform: translate(30px, -30px) scale(0.95); }
+.plasma-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  filter: blur(20px);
 }
-@keyframes blobDrift2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(50px, -40px) scale(1.08); }
+
+@keyframes breatheWater {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.15); opacity: 0.8; }
 }
-@keyframes blobDrift3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  40% { transform: translate(-30px, 30px) scale(1.04); }
-  80% { transform: translate(20px, -20px) scale(0.96); }
+
+@keyframes driftWater {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
 }
 
 /* ============================================
